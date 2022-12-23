@@ -1,0 +1,153 @@
+Plan for Jan 18th Transcript (co-author with Sevy??):
+
+******** 2-BTP optimization: 
+
+         - old model: David's 2-BTP 
+             - Flaws: 
+                 * no pressure dependence
+                 * couldn't even get methane with 0% 2-BTP correct
+                 * didn't match experimental data at all across all volume fractions of 2-BTP
+    
+         - "improved" model: 2-BTP with BROH in core (204 species)
+             - Model stats: 
+                  * 204 species
+                  * 146 unique species reactions compared to NIST 
+                  * 321 common reactions between NIST and RMG, reactions belonging to the new halogen chemistry families were: 
+                          
+                         - 2 F-abstractions
+                         - 5 Br-abstractions
+                         - 1 halocarbene_recombination
+                         
+                  * 1777 total reactions, 1453 unique reactions compared to NIST: 
+                      of the unique reactions in RMG, reactions belonging to the new halogen chemistry families were: 
+                          
+                          - 9 F-Abstraction
+                          - 10 Br-Abstractions
+                          - 1 XY_Addition_MultipleBond
+                   
+                          
+             - sensitivity analysis: 
+                 * have for both NIST and RMG with BROH in core
+                 
+             - 
+                 
+             
+             
+             - Improvements: 
+                 * pressure dependence
+                 * significantly closer to experimental 
+  
+             -To Work on/Future Work: 
+                 * doesn't match as well as the NIST model
+                 * NIST model stats: 
+                       - 188 species
+                       - 130 unique species
+                       - 1591 total reactions 
+                       - 1274 unique reactions 
+                       
+                       - using Sevy's match_reaction_templates script: 
+                           * counted 1591 reactions in the mechanism
+                           * Correct: 0 (because none were previously classified)
+                           * Incorrect: 850 (because none were previously classified) 
+                           * Missing: 628 (these do not match an RMG template)
+                           * ask Sevy what happened to rest of reactions? 850 + 628 = 1478 != 1591
+                           
+                           
+                        1,2_Insertion_CO                  1
+                        1,3_sigmatropic_rearrangement     1
+                        Birad_R_Recombination             4
+                        
+                        Br_Abstraction                    30
+                        
+                                BR2 + H <=> BR + HBR
+                                CH3BR + H <=> CH3 + HBR
+                                BR2 + CH3 <=> BR + CH3BR
+                                C2H3BR + H <=> C2H3 + HBR
+                                BR2 + C2H3 <=> BR + C2H3BR
+                                C2H5BR + H <=> C2H5 + HBR
+                                BR2 + C2H5 <=> BR + C2H5BR
+                                CF3BR + H <=> CF3 + HBR
+                                BR2 + CF3 <=> BR + CF3BR
+                                CF3BR + CH3 <=> CF3 + CH3BR
+                                BR2 + O <=> BR + BRO
+                                CF3BR + O <=> BRO + CF3
+                                CH3BR + O <=> BRO + CH3
+                                BRO + H <=> HBR + O
+                                CH3BR + OH <=> BROH + CH3
+                                BR2 + OH <=> BR + BROH
+                                BROH + H <=> HBR + OH
+                                BROH + O <=> BRO + OH
+                                BR + CH2BR <=> BR2 + CH2
+                                CH2 + HBR <=> CH2BR + H
+                                CF3BR + OH <=> BROH + CF3
+                                C2H3BR + OH <=> BROH + C2H3
+                                C2H5BR + OH <=> BROH + C2H5
+                                C2H5BR + CH3 <=> C2H5 + CH3BR
+                                C2H3BR + CH3 <=> C2H3 + CH3BR
+                                C2H5BR + CF3 <=> C2H5 + CF3BR
+                                C2H3BR + CF3 <=> C2H3 + CF3BR
+                                C2H5BR + O <=> BRO + C2H5
+                                BTP + H <=> CF3CCH2 + HBR
+                                BTP + CF3 <=> CF3BR + CF3CCH2
+
+                        
+                        CO_Disproportionation             27
+                        Disproportionation                119
+                        Disproportionation-Y              14
+                        
+                        F_Abstraction                     15
+                        *unlike RMG, no F-abstraction reactions with brominated species
+                        
+                            CH3F + H <=> CH3 + HF
+                            CH2F2 + H <=> CH2F + HF
+                            CHF3 + H <=> CHF2 + HF
+                            CF4 + H <=> CF3 + HF
+                            CF2:O + H <=> CF:O + HF
+                            CF3-CF3 + H <=> CF3-CF2 + HF
+                            CF3COF + H <=> CF3CO + HF
+                            CF3 + CF3COF <=> CF3CO + CF4
+                            CF3-CF2 + CF3COF <=> CF3-CF3 + CF3CO
+                            CF3 + CF3-CF3 <=> CF3-CF2 + CF4
+                            CF4 + CH3 <=> CF3 + CH3F
+                            F2 + H <=> F + HF
+                            CF3 + F2 <=> CF4 + F
+                            CH3 + F2 <=> CH3F + F
+                            CF:O + F2 <=> CF2:O + F                        
+                        
+                        H_Abstraction                     495
+                        R_Addition_COm                    1
+                        R_Addition_MultipleBond           45
+                        R_Recombination                   88
+                        Substitution_O                    3
+                        
+                        XY_Addition_MultipleBond          1
+                        
+                            CF3CCH + HBR <=> BTP  
+                            
+                         
+                        intra_H_migration                 6
+                      
+                    
+                       
+                       
+                       
+                       
+                       
+                       
+                       
+                 
+                 
+                 * had to add BROH in core, wouldn't have known this if not for the NIST model. RMG can't predict on it own 
+                     - still on fence about focusing on this: improved model from RMG v. RMG improvements?)
+                 
+                  
+#################################################################################################
+
+Possible things to do: 
+
+- RMG w/ BROH in core: no difference in flamespeeds between 137 species and 204 species. Maybe rerun and use smaller model instead? Make sure to   stop at 137 to get chem_annotated.inp
+
+Doing: 
+
+- rerunning flamespeed with reaction 777 removed from BROH in core 
+- rerunning subtract sensitivity with reaction 777 from BROH in core
